@@ -1,0 +1,17 @@
+<misFacturas>
+	<Factura>
+		<descripcion>naranjas</descripcion>
+		<cantidad>1</cantidad>
+		<precio>10</precio>
+	</Factura>
+	<Factura>
+		<descripcion>naranjas</descripcion>
+		<cantidad>3</cantidad>
+		<precio>12</precio>
+	</Factura>
+	<Factura>
+		<descripcion>naranjas</descripcion>
+		<cantidad>17</cantidad>
+		<precio>8</precio>
+	</Factura>
+</misFacturas>

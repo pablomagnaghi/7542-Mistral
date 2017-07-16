@@ -1,0 +1,49 @@
+Módulo GUI ( editor de plantillas )
+
+El Editor Gráfico esta implementado mediante el patrón MVC ( Modelo-Vista-Controlador ).Por cada
+ObjetoGrafico existe un ObjetoGui(modelo), una Figura(Vista) y ésta tiene un Comportamiento(Controlador).El
+patrón es implementado mediante Observador-Observer.
+
+Figura
+
+La clase Figura es una interfaz que tiene toda la lógica de dibujo y representación de un ObjetoGui en la
+pantalla.Sus dos métodos más importantes  son:
+draw: Dibuja la Figura en un área de dibujo.
+getComportamiento(): Devuelve un comportamiento en el cual se delegan las acciones que realiza el usuario.
+
+imagen: FiguraComportamientoGeneral
+
+ObjetoGui
+
+La clase ObjetoGui es una adaptación del modelo que permite acceder a los atributos de cada objeto gráfico en
+forma de lista.Muy útil para representarlos en la pantalla y permitir su edición.En general siempre tiene una
+referencia a su par en el modelo.Su principal método es:
+
+getAtributos( std::list<FormatoAtributo>& listaDeAtributos ): Devuelve una lista de atributos del objeto.Cada
+FormatoAtributo tiene un control para que pueda ser modificado.
+
+imagen: GuiModeloAtributos
+
+Comportamiento
+
+El Comportamiento es una interfaz que responde a los eventos de button_press, button_release y motion_notify.
+El área de dibujo, delega estos eventos en el objeto lo que le permite variar su comportamiento en forma
+dinámica.
+
+MyArea
+
+El Area funciona como Area de dibujo, contenedor de Figuras y ObjetosGui.Se encarga de delegar sus eventos
+a la clase Comportamiento de acuerdo al caso.
+Es Capaz de recibir un objeto Hoja del modelo, construir los ObjetosGui y Figuras de esa hoja para
+representar una plantilla.
+El Área, tiene un ComportamientoSeleccion.Este Comportamiento es particular, ya que detecta que objeto se
+encuentra seleccionado en el editor y delega el comportamiento en ese objeto.
+
+imagen:FiguraComportamientoSeleccion
+
+
+Diálogo test postscript
+
+El Cuadro de diálogo test postscript, recibe la ruta de un archivo de datos y un nombre de archivo de salida.
+Como resultado, utiliza la versión actual para generar, a partir del archivo de datos un archivo postscript.
+El archivo postscript se guarda en la misma carpeta del editor gráfico.

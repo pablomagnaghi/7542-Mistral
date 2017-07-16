@@ -1,0 +1,57 @@
+Compilación:
+
+El proyecto consta de tres carpetas:
+/doc : Documentación técnica y manuales.
+/bin : Binarios de la aplicación.
+/srd : Archivos fuentes.
+
+Para compilar la aplicación ir al directorio /src y ejecutar el comando make.Esto compilará
+el proyecto y generará dos binarios en la carpeta /bin: psPorLotes ( Procesamiento por lotes y servidor )
+y psGui (editor de plantillas).
+Recordar que para la distribución de psGui es necesario el archivo gui que también se copiará al directorio
+/bin.
+
+Para "limpiar" las carpetas del proyecto ejecutar make clean en /src.
+
+Requerimientos de software:
+
+Sistema Operativo: Linux/GNU.
+Bibliotecas:
+
+	libxml-2.0
+	gtkmm
+	glademm
+Herramientas necesarias para la compilación:
+	g++
+	make
+
+Lista
+
+
+La edición del objeto Lista se realiza toda mediante pop-ups y cuadros de diálogos.Al Insertar una Lista, por
+defecto posee tes columnas y 4 adicionales.
+
+Columnas
+
+Las columnas se agregan siempre del lado izquierdo de la lista.Para esto, hacer click derecho sobre la lista
+y seleccionar la opción "agregar columna".A continuación se debe elegir el tipo de celda que tendrá el cuerpo
+de la columna agregada.
+
+Para eliminar columnas hacer click derecho sobre la columna que se desea eliminar y seleccionar la opción
+"eliminar columna".
+
+Configuración de celdas
+
+Cada Columna se separa en tres partes: Un encabezado que tiene el nombre de la columna; un cuerpo que
+puede ser un texto variable, un cálculo o un texto fijo; y celdas adicionales que también pueden ser de
+cualquier tipo.
+
+Celda adicionales
+
+Para configurar una celda se debe hacer doble click sobre ella, ya sea texto variable, texto fijo a Cálculo e
+insertar en el cuadro de diálogo un xpath, un texto o una operación respectivamente.
+
+Para agregar celdas adicionales a una columna, se debes hacer click derecho sobre ella y seleccionar el tipo
+de celda adicional.Para eliminar una celda adicional hay que hacer click derecho sobre la celda que se desea
+eliminar y seleccionar la opción correspondiente.
+

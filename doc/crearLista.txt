@@ -1,0 +1,22 @@
+
+   TextoVariable* txtCol1 = new TextoVariable("./Precio");
+   TextoVariable* txtCol2 = new TextoVariable("./cantidad");
+   Calculo* txtCol3 = new Calculo();
+   
+
+
+   ObjetoLista* lista = new ObjetoLista("./descripcion");
+   lista->agregarColumna( "Precio",txtCol1,25 );
+   lista->agregarColumna( "Cantidad",txtCol2,25 );
+   lista->agregarColumna( "Producto",txtCol3,50 );
+
+   TextoFijo* txtAdA1 = new TextoFijo("iva");
+   TextoFijo* txtAdA2 = new TextoFijo("titulo");
+
+   TextoFijo* txtAdB1 = new TextoFijo("iva");
+   TextoVariable* txtAdB2 = new TextoVariable("./titulo");
+
+   lista->agregarAdicional(1,txtAdA1);
+   lista->agregarAdicional(1,txtAdA2);
+   lista->agregarAdicional(2,txtAdB1);
+   lista->agregarAdicional(2,txtAdB2);

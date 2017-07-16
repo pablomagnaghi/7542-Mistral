@@ -1,0 +1,39 @@
+Modelo
+  * Cambiar Cálculo para soportar notación polaca inversa.	OK
+  * Parser de Cálculo para tranformar string en notación polaca inversa.	OK
+  * Detalles de Objeto Lista ( relacionado con la Gui ).
+PostScript
+  * Opción del generador para único archivo postscript  OK
+Gui
+  * Creación y edición del objeto lista.
+  * Cambiar interfaz de Calculo
+  * Manejo de múltiples versiones de una plantilla
+    * Edición de fecha de validez sobre una versión
+    * Combo para elegir versión de trabajo
+  * Crear clase Contexto, arreglar problemas de manejo de archivos.
+  * Eliminar objetos
+  * Recuadro sobre objeto seleccionado.
+Servidor
+  * Probar a full métodos de clase Mensajes.h	OK
+  * Constructores de MensajeHTTP, PeticionHTTP y RespuestaHTTP	OK
+  * Manejo de errores al recibir petición HTTP
+  * Procesamiento de Peticion SOAP con GeneradorPostScript	OK
+  * Definir codigos de retorno de RespuestaSOAP, implementar respuesta de servidor.	OK
+  * terminar servidor::AtencionCliente	 OK
+  * mover clases necesarias para implementar servidor junto con lotes.
+  *Detalles de errores en peticion HTTP y HTTPSOAP
+Programa Ppal
+  * Implementar parser de parámetros para recibir modo por lotes o en linea.Los parametros serían algo así.
+
+  modo línea:
+  ./psPorLotes  templateFactura.xml ./unaFactura.xml ./ --unicoArchivo
+  ./psPorLotes  <nombreArchivoTemplate> <pathArchivoDeDatos> <directorioDeResultados> 
+		<opcional --unicoArchivo>
+
+  modo server:
+  ./psPorLote -s 127.0.0.1:5000 --unicoArchivo //agregado para compatible en generadorPostScript
+
+  * Implementar modo en línea en main.cpp.
+
+Documentación
+  * Muchas cosas

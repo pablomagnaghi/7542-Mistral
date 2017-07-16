@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="toPostScriptService"
+   targetNamespace="http://www.tpFinal.com/wsdl/toPostScriptService.wsdl"
+   xmlns="http://schemas.xmlsoap.org/wsdl/"
+   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+   xmlns:tns="http://www.tpFinal.com/wsdl/toPostScriptService.wsdl"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ 
+   <message name="toPostScriptRequest">
+      <part name="nombreTemplate" type="xsd:string"/>
+      <part name="fechaValidez" type="xsd:date"/>
+      <part name="archivoDatos" type="xsd:string"/>
+   </message>
+   <message name="toPostScriptResponse">
+      <part name="nombreArchivoResultado" type="xsd:string"/>
+      <part name="cantidadDeArchivos" type="xsd:int"/>
+      <part name="codeReturn" type="xsd:int"/>
+   </message>
+   <portType name="toPostScript_PortType">
+      <operation name="toPostScript">
+         <input message="tns:toPostScriptRequest"/>
+         <output message="tns:toPostScriptResponse"/>
+      </operation>
+   </portType>
+   
+   <binding name="toPostScript_Binding" type="tns:toPostScript_PortType">
+      <soap:binding style="document" 
+         transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="toPostScript">
+         <input>
+            <soap:body
+               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+               namespace="urn:examples:helloservice"
+               use="literal"/>
+         </input>
+         <output>
+            <soap:body
+               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+               namespace="urn:examples:helloservice"
+               use="literal"/>
+         </output>
+      </operation>
+   </binding>
+ 
+   <service name="toPostScript_Service">
+      <documentation>WSDL File for toPostScript</documentation>
+      <port binding="tns:toPostScript_Binding" name="toPostScript_Port">
+         <soap:address 
+            location="http://localhost:8080/toPostScript"/>
+      </port>
+   </service>
+</definitions>

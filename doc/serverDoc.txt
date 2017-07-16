@@ -1,0 +1,173 @@
+Documentación Técnica
+
+Módulo Servidor:
+
+Este modulo tiene las clases necesarias para escuchar conexiones, recibir peticiones HTTP-SOAP, procesarlas
+y devolver una respuesta HTTP-SOAP. 
+
+Clases
+
+Clase Server
+
+Esta clase se encarga de recibir conexiones a travéz de un puerto y crear un objeto del tipo
+AtencionCliente para atender esa conexión.
+
+Clase AtencionCliente
+
+Recibe una petición HTTP y valida que la petición sea correcta de acuerdo al protocolo HTTP 1.0.Si la
+petición es una petición HTTP-SOAP válida, instancia un objeto de tipo Web-Service que se encargará de
+procesar la petición.Atención cliente, devuelve una respuesta HTTP-SOAP y cierra la conexión.
+
+Clase WebService
+
+Es la clase encargada de "ejecutar" la petición SOAP.Primero verifica que la petición tenga el formato
+correcto de acuerdo al wsdl ( ver apéndice B ), luego, de acuerdo al valor de los parámetros genera el archivo
+postscript si es necesario y construye la respuesta SOAP.
+
+Clase Atención cliente
+
+Métodos de alto y bajo nivel para el envío y recepción de mensajes a travéz de un socket.Permite enviar y
+recibir peticiones y respuestas HTTP procesando los bytes recibidos, obteniendo el campo content-lenght y de
+acuerdo a eso leyendo el cuerpo del mensaje.
+
+
+
+Apéndice A
+
+Formato de los mensajes de Comunicación
+
+El servicio SOAP funcionará sobre el protocolo HTTP versión 1.0.Recibirá las peticiones HTTP-SOAP mediante
+el método POST.Las posibles respuestas de error HTTP implementadas en nuestro servidor
+son las siguientes:
+
+"400 Bad Request" : Formato inválido en la petición HTTP.
+"501 Not Implemented" : Método distinto a POST en la petición.
+"505 HTTP Version Not Supported" : Vesión diferente a HTTP 1.0
+"411 Length Required": La petición no especifica el tamaño del contenido del mensaje.
+
+Es decir que nuestro servidor HTTP, recibe solo mensajes tipo POST, version HTTP1.0 y que tenga el campo
+Content-Length especificando el tamaño del contenido.
+
+Todos los errores relacionados al formato de la petición SOAP retornan un mensaje con
+error generico "500 Internal Server Error".Incluyendo el caso en que el campo fechaValidez tenga un formato
+inválido
+
+Formatos de petición y respuesta
+
+<crlf> es el fin de linea del protocolo http, correspondiente a los caracteres \r y \n.
+
+Formato de petición HTTP-SOAP
+
+POST http://localhost:5000/ HTTP/1.0
+Accept-Encoding: gzip,deflate
+Content-Type: text/xml;charset=UTF-8
+User-Agent: Jakarta Commons-HttpClient/3.1
+Host: localhost:5000
+Content-Length: 269
+
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <nombreTemplate>?</nombreTemplate>
+      <fechaValidez>?</fechaValidez>
+      <archivoDatos>?</archivoDatos>
+   </soapenv:Body>
+</soapenv:Envelope>
+
+
+El contenido del mensaje tiene la petición SOAP de nuestro WEb-Service.Se deben especificar tres parámetros:
+
+nombreTemplate: Nombre de la plantilla para generar archivos postscript.En nuestra implementación el servidor
+busca el archivo con ese nombre dentro de su directorio.
+
+fechaValidez: Fecha de validez de los datos.El servidor soporta solo el formato "dd/mm/aaaa".
+
+archivoDatos: Archivo Xml de datos.El wsdl lo define como un string.En la petición debe ser colocado con el
+formato <![CDATA["archivo Xml"]]>.
+
+
+Formato de respuesta HTTP-SOAP
+
+HTTP/1.0 200 OK
+
+<?xml version="1.0"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <codeReturn>0</codeReturn>
+    <nombreArchivoResultado>Factura.ps</nombreArchivoResultado>
+  </soapenv:Body>
+</soapenv:Envelope>
+
+Una respuesta HTTP-SOAP tiene un campo codeReturn que specifica el resultado del procesamiento de la
+la petición.Los posibles valores son:
+
+SOAP_OK 0 : Se generó satisfactoriamente el archivo postscript y se devuelve en el parámetro
+"nombreArchivoResultado" el nombre del archivo generado.El archivo contiene una hoja por cada elemento del
+archivo de datos.
+
+SOAP_SIN_VERSION 1: Existe una plantilla pero no contiene ninguna version correspondiente a la fecha de
+validez pasada por parámetro.
+
+SOAP_SIN_TAG_DATOS 2: Existen una plantilla y una versión válidas ,pero el archivo de Datos no tiene ningún
+nodo con el nombre especificado en la plantilla.
+
+SOAP_SIN_TEMPLATE  3: No existe un archivo de plantilla con ese nombre en el sistema.
+
+Archivo WSDL del web-service
+
+?xml version="1.0" encoding="UTF-8"?>
+<definitions name="toPostScriptService"
+   targetNamespace="http://www.tpFinal.com/wsdl/toPostScriptService.wsdl"
+   xmlns="http://schemas.xmlsoap.org/wsdl/"
+   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+   xmlns:tns="http://www.tpFinal.com/wsdl/toPostScriptService.wsdl"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ 
+   <message name="toPostScriptRequest">
+      <part name="nombreTemplate" type="xsd:string"/>
+      <part name="fechaValidez" type="xsd:date"/>
+      <part name="archivoDatos" type="xsd:string"/>
+   </message>
+   <message name="toPostScriptResponse">
+      <part name="nombreArchivoResultado" type="xsd:string"/>
+      <part name="cantidadDeArchivos" type="xsd:int"/>
+      <part name="codeReturn" type="xsd:int"/>
+   </message>
+   <portType name="toPostScript_PortType">
+      <operation name="toPostScript">
+         <input message="tns:toPostScriptRequest"/>
+         <output message="tns:toPostScriptResponse"/>
+      </operation>
+   </portType>
+   
+   <binding name="toPostScript_Binding" type="tns:toPostScript_PortType">
+      <soap:binding style="document" 
+         transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="toPostScript">
+         <input>
+            <soap:body
+               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+               namespace="urn:examples:helloservice"
+               use="literal"/>
+         </input>
+         <output>
+            <soap:body
+               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+               namespace="urn:examples:helloservice"
+               use="literal"/>
+         </output>
+      </operation>
+   </binding>
+ 
+   <service name="toPostScript_Service">
+      <documentation>WSDL File for toPostScript</documentation>
+      <port binding="tns:toPostScript_Binding" name="toPostScript_Port">
+         <soap:address 
+            location="http://localhost:8080/toPostScript"/>
+      </port>
+   </service>
+</definitions>
+
+
+

@@ -1,0 +1,22 @@
+Trabajar con archivos ( Elementos del menú y Botones )
+  -->Crear una plantilla nueva. Archivo-->nueva plantilla
+  -->Abrir una plantilla  Archivo-->nueva version
+  -->Guardar una plantilla en archivo Archivo--> Guardar/Guardar Como
+  -->Crear versiones de una plantilla Archivo-->Nueva Version
+
+Edicion
+  -->seleccion de una version de trabajo ( combo box con versiones por fecha )
+  -->Botones para cada objeto, apretar boton, arrastrar y soltar en area
+  -->Tabla de propiedades ( se hace click sobre el objeto y muestra sus propiedades)
+                          ( El objeto seleccionado aparece en color)
+  -->Eliminar Objeto ( Seleccionar objeto y presionar boton Eliminar)
+  -->Imágen defondo ( Menu "Documento-->ins imagen ) Seleccionar imagen para mostrar en editor
+  -->Objetos
+      -->Linea
+      ->Texto Fijo
+      ->Texto Variable
+      -->Calculo
+      -->Lista
+TestPostScript
+  -->generar test postscript ( ventanita...explicacion de donde se genera el archivo .ps)
+                               y genera solo uno.

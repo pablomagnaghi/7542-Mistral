@@ -1,0 +1,41 @@
+La interfaz gráfica permite la creación, edición y guardado de plantillas.También, la ejecución de
+pruebas rápidas aplicando la plantilla de trabajo a un archivo de datos y generando código postscript.
+Por el momento, no se puede trabajar con múltiples versiones de plantillas sino con una única versión 
+de trabajo.
+
+Inicio
+
+Para comenzar a trabajar hay que ir al menú "Archivo", y seleccionar la opción "Abrir" (elegir una plantilla de un archivo existente para editarla) 
+o la opción "nueva plantilla" para crear un documento vacío.
+La opción "Nueva plantilla" nos pide el nombre, la descripción y una cadena que indica el tag dentro del xml de datos a partir del cual
+se generaran los archivos postscript para esa plantilla.Aclaración:Se debe colocar solo el nombre del tag sin los caracteres "<" ">".
+
+Edición
+
+Una vez que creamos o abrimos una plantilla se activa el área de dibujo y podemos agregar
+objetos gráficos o modificar sus propiedades.Para agregar un objeto hay que hacer click en el botón correspondiente
+en el lado izquierdo de la ventana, dirigirse al area de dibujo, y arrastrar y soltar. 
+Inmediatamente después se pasa al modo "selección" que nos permite modificar la pocisión de cualquier objeto, cambiar su tamaño
+y ver sus propiedades haciendo click sobre el.
+
+Objetos y comportamiento
+
+El editor permite trabajar con 4 tipos de objetos graficos: Línea, texto fijo, texto variable y Cálculo.
+Para modificar las posiciones de estos objetos puede hacerse mediante la caja de propiedades o con drag and
+p en el área de dibujo.De la misma manera, para modificar las posiciones iniciales y finales de la línea.
+En el caso de los objetos rectangulares ( texto fijo, texto variable, y cálculo ) se puede modificar
+su ancho y alto haciendo drag and drop a partir de su borde inferior derecho.
+El texto variable posee como propiedad particular un xpath relativo al nodo de datos que se procesara al
+momento de generar el postscript.
+Para especificar los operandos y operadores del objeto cálculo, debe hacerse doble click sobre el.
+Aparecerá un cuadro de diálogo que nos permite definir solo dos operandos y una operación.
+Estos operandos pueden ser variables (se debe especificar la ruta xpath de su valor), o una
+constante numérica.Aclaración:El modelo permite trabajar con múltiples operandos y operadores pero ésta
+versión de la GUI solo con 2.
+
+
+Guardado
+
+Para guardar un documento y su correspondiente versión hay que ir a las opciones "guardar"
+o "guardar Como" del menú "Archivo" y especificar el nombre del mísmo.Los documentos se
+guardan automaticamente con la extensión ".xml"
